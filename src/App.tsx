@@ -68,12 +68,14 @@ function TimeControl(props: { class?: string; value: number; onInput(delta: numb
     }
   }
 
-  function handleClick(delta: number) {
+  function handlePointer(
+    event: PointerEvent & { currentTarget: HTMLButtonElement },
+    delta: number,
+  ) {
     handleInput(delta)
     let next = setInterval(() => handleInput(delta), 1_000 / 4)
-    window.addEventListener('pointerup', () => {
-      clearInterval(next)
-    })
+    event.currentTarget.addEventListener('pointerup', () => clearInterval(next))
+    event.currentTarget.addEventListener('pointerleave', () => clearInterval(next))
   }
 
   return (
@@ -86,14 +88,14 @@ function TimeControl(props: { class?: string; value: number; onInput(delta: numb
       <div>
         <button
           class={clsx(styles.button, props.value > 0.5 ? false : styles.disabled)}
-          onPointerDown={() => handleClick(-0.5)}
+          onPointerDown={event => handlePointer(event, -0.5)}
         >
           &minus;
         </button>
         <div />
         <button
           class={clsx(styles.button, props.value < 99.5 ? false : styles.disabled)}
-          onPointerDown={() => handleClick(0.5)}
+          onPointerDown={event => handlePointer(event, 0.5)}
         >
           +
         </button>
