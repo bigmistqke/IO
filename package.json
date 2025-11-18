@@ -20,7 +20,6 @@
   },
   "dependencies": {
     "@bigmistqke/solid-whenever": "^0.1.1",
-    "@bigmistqke/view.gl": "^0.1.9",
     "@solid-primitives/storage": "^4.3.3",
     "clsx": "^2.1.1",
     "postcss-nesting": "^13.0.2",

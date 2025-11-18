@@ -11,9 +11,6 @@ importers:
       '@bigmistqke/solid-whenever':
         specifier: ^0.1.1
         version: 0.1.1(solid-js@1.9.9)
-      '@bigmistqke/view.gl':
-        specifier: ^0.1.9
-        version: 0.1.9
       '@solid-primitives/storage':
         specifier: ^4.3.3
         version: 4.3.3(solid-js@1.9.9)
@@ -595,9 +592,6 @@ packages:
     engines: {node: '>=18', pnpm: '>=9.0.0'}
     peerDependencies:
       solid-js: ^1.6.0
-
-  '@bigmistqke/view.gl@0.1.9':
-    resolution: {integrity: sha512-Xxi6EHwNRwLSmKEtTCDAjlmA9Q9MxVznXfZ73mIcXD/1zTVuV4z8ycVYCNW2w+1TDqXtUYuvv2H1+crf+VV9GA==}
 
   '@csstools/selector-resolve-nested@3.1.0':
     resolution: {integrity: sha512-mf1LEW0tJLKfWyvn5KdDrhpxHyuxpbNwTIwOYLIvsTffeyOf85j5oIzfG0yosxDgx/sswlqBnESYUcQH0vgZ0g==}
@@ -2807,8 +2801,6 @@ snapshots:
   '@bigmistqke/solid-whenever@0.1.1(solid-js@1.9.9)':
     dependencies:
       solid-js: 1.9.9
-
-  '@bigmistqke/view.gl@0.1.9': {}
 
   '@csstools/selector-resolve-nested@3.1.0(postcss-selector-parser@7.1.0)':
     dependencies:

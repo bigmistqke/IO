@@ -1,4 +1,3 @@
-import { compile, glsl, uniform } from '@bigmistqke/view.gl/tag'
 import clsx from 'clsx'
 import { AiFillPlayCircle, AiOutlinePause } from 'solid-icons/ai'
 import {
@@ -76,8 +75,8 @@ function TimeControl(props: {
         </button>
         <div />
         <button
-          class={clsx(styles.button, props.value < 9.5 ? false : styles.disabled)}
-          onClick={() => (props.value < 9.5 ? props.onIncrement() : undefined)}
+          class={clsx(styles.button, props.value < 99.5 ? false : styles.disabled)}
+          onClick={() => (props.value < 99.5 ? props.onIncrement() : undefined)}
         >
           +
         </button>
@@ -86,9 +85,25 @@ function TimeControl(props: {
   )
 }
 
-const App: Component = () => {
-  let canvas: HTMLCanvasElement = null!
+function Overlay(props: { value: number }) {
+  return (
+    <>
+      <div class={styles.overlayFilter} />
+      <svg
+        preserveAspectRatio="none"
+        width="100%"
+        height="100%"
+        viewBox="0 0 100 100"
+        class={styles.overlay}
+      >
+        <rect x={0} y={0} height={100 - props.value * 100} width="100%" class={styles.overlayBar} />
+      </svg>
+    </>
+  )
+}
 
+const App: Component = () => {
+  const [value, setValue] = createSignal(0)
   const [sessionCount, setSessionCount] = createSignal(0)
   const [breatheCount, setBreatheCount] = createSignal(0)
   const [config, setConfig] = createStore<{
@@ -127,46 +142,9 @@ const App: Component = () => {
   const isPhaseSelected = createSelector(phase)
   const direction = () => (isPhaseSelected('in') ? 1 : -1)
 
-  function getGL() {
-    const gl = canvas.getContext('webgl2', { antialias: true })
-    if (!gl) {
-      throw new Error(
-        `Expected canvas.getContext('webgl2') to return WebGL2RenderingContext, but returned null`,
-      )
-    }
-    return gl
-  }
-
   function setup() {
-    const gl = getGL()
-
-    const fragment = glsl`#version 300 es
-precision mediump float;
-
-in vec2 v_uv;
-out vec4 outColor;
-${uniform.float('u_value')}
-
-void main() {
-  if(v_uv[1] > u_value){
-    outColor = vec4(1.0);
-  }else{
-    discard;
-  }
-}`
-    const { program, view } = compile.toQuad(gl, fragment, { webgl2: true })
-
-    gl.useProgram(program)
-
     let animationFrame: number
     let previous: number | undefined = undefined
-    let current = -1
-
-    function render() {
-      view.attributes.a_quad.bind()
-      view.uniforms.u_value.set(current)
-      gl.drawArrays(gl.TRIANGLES, 0, 6)
-    }
 
     function animate(time: number) {
       // Request next frame
@@ -176,33 +154,21 @@ void main() {
         const delta = time - previous
         const duration = config[phase()]
 
-        current += (delta * direction()) / (duration * 1_000)
+        setValue(value => (value += (delta * direction()) / (duration * 1_000)))
 
         if (direction() > 0) {
-          if (current >= 1) {
+          if (value() >= 1) {
             setPhase('out')
           }
         } else {
-          if (current <= -1) {
+          if (value() <= 0) {
             setPhase('in')
           }
         }
       }
 
-      render()
-
       previous = time
     }
-
-    function resize() {
-      canvas.height = window.innerHeight
-      canvas.width = window.innerWidth
-      gl.viewport(0, 0, canvas.width, canvas.height)
-      render()
-    }
-
-    window.addEventListener('resize', resize)
-    resize()
 
     createEffect(() => {
       if (playing()) {
@@ -240,7 +206,7 @@ void main() {
             isPhaseSelected('in') && styles.selected,
           )}
         >
-          <h1 class={styles.panelTitle}>IN</h1>
+          <h1 class={styles.panelTitle}>in</h1>
           <TimeControl
             value={config.in}
             onDecrement={() => setConfig('in', v => v - 0.5)}
@@ -255,7 +221,7 @@ void main() {
             isPhaseSelected('out') && styles.selected,
           )}
         >
-          <h1 class={styles.panelTitle}>OUT</h1>
+          <h1 class={styles.panelTitle}>out</h1>
           <TimeControl
             value={config.out}
             onDecrement={() => setConfig('out', v => v - 0.5)}
@@ -263,7 +229,7 @@ void main() {
           />
         </section>
       </div>
-      <canvas ref={canvas} class={styles.canvas} />
+      <Overlay value={value()} />
     </>
   )
 }
