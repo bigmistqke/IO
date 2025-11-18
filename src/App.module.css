@@ -29,6 +29,15 @@ body {
   color: white;
 }
 
+.playButtonContainer {
+  position: fixed;
+  top: 50dvh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: white;
+}
+
 .playButton > svg {
   width: 75px;
   height: 75px;
@@ -72,10 +81,15 @@ body {
     flex-direction: row;
     justify-content: space-between;
     font-family: 'Anonymous Pro', monospace;
+
+    & > * {
+      padding-inline-start: 2px;
+    }
   }
 }
 
 .button {
+  cursor: pointer;
   margin: 0px;
   border: 0px;
   background-color: transparent;
@@ -87,12 +101,10 @@ body {
   &.disabled {
     opacity: 0.5;
   }
-}
-.playButtonContainer {
-  position: fixed;
-  top: 50dvh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  color: white;
+
+  &:focus-visible {
+    outline: none;
+    background-color: white;
+    color: black;
+  }
 }
