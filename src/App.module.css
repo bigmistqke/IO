@@ -69,6 +69,7 @@ body {
 .timeControl {
   display: flex;
   flex-direction: column;
+  gap: 15px;
   opacity: 0.75;
   transition: opacity 0.5s;
   margin-inline-start: 20px;
