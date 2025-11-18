@@ -7,10 +7,17 @@ export default defineConfig({
   base: './',
   plugins: [
     VitePWA({
-      registerType: 'autoUpdate', devOptions: {
+      registerType: 'autoUpdate',
+      manifest: {
+        display: 'standalone',
+        icons: [{
+          "src": "assets/icon.svg"
+        }]
+      },
+      devOptions: {
         enabled: true
-      }
-    }), devtools(), solidPlugin()],
+      },
+    }) as unknown as Plugin, devtools(), solidPlugin()],
   server: {
     port: 3000,
   },
