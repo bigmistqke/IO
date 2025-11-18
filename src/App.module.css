@@ -79,6 +79,7 @@ body {
   margin-block-end: 10px;
   width: 75px;
   font-size: 16pt;
+  user-select: none;
 
   & > div {
     display: flex;
@@ -102,6 +103,10 @@ body {
   color: inherit;
   font-size: inherit;
   font-family: inherit;
+
+  &:hover {
+    background-color: unset;
+  }
 
   &.disabled {
     opacity: 0.75;
