@@ -70,7 +70,7 @@ function TimeControl(props: { class?: string; value: number; onInput(delta: numb
 
   function handleClick(delta: number) {
     handleInput(delta)
-    let next = setInterval(() => handleInput(delta), 1_000 / 3)
+    let next = setInterval(() => handleInput(delta), 1_000 / 4)
     window.addEventListener('pointerup', () => {
       clearInterval(next)
     })
@@ -79,7 +79,9 @@ function TimeControl(props: { class?: string; value: number; onInput(delta: numb
   return (
     <div class={clsx(styles.timeControl, props.class)}>
       <div>
-        <For each={props.value.toFixed(1).split('')}>{char => <span>{char}</span>}</For>
+        <For each={props.value.toFixed(1).replace('.', ',').split('')}>
+          {char => <span>{char}</span>}
+        </For>
       </div>
       <div>
         <button
@@ -122,8 +124,8 @@ const App: Component = () => {
     in: number
     out: number
   }>({
-    in: 3.5,
-    out: 5,
+    in: 4.5,
+    out: 6,
   })
   const [value, setValue] = createSignal(0)
   const [sessionCount, setSessionCount] = createSignal(0)

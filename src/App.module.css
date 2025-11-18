@@ -9,8 +9,11 @@ body {
   width: 100vw;
   height: 100dvh;
   overflow: hidden;
-  font-size: 12pt;
+  touch-action: none;
+  font-size: 16pt;
   font-family: 'Inter', sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .overlayFilter {
@@ -19,20 +22,20 @@ body {
   left: 0px;
   z-index: 1;
   mix-blend-mode: hard-light;
-  background-color: rgb(24, 24, 96);
+  background-color: rgb(66 66 165);
   width: 100%;
   height: 100%;
   pointer-events: none;
 }
 
 .overlay {
-  background-color: #b8b8b8;
+  background-color: white;
   width: 100vw;
   height: 100dvh;
 }
 
 .overlayBar {
-  fill: #343333;
+  fill: #1b1b1c;
 }
 
 .ui {
@@ -64,22 +67,19 @@ body {
 }
 
 .playButton > svg {
-  width: 75px;
-  height: 75px;
+  width: 50px;
+  height: 50px;
 }
 
 .panel {
   display: grid;
   grid-template-rows: 1fr 125px;
-  opacity: 0.75;
   transition: opacity 0.5s;
   box-sizing: border-box;
   margin-inline: 20px;
 
   &.pausing,
   &.selected {
-    opacity: 1;
-
     & .panelTitle {
       filter: blur(0px);
     }
@@ -91,20 +91,20 @@ body {
 }
 
 .panelTitle {
-  filter: blur(5px);
-  transition: filter 0.5s;
+  filter: blur(7px);
+  transition: filter 0.75s;
   font-weight: 300;
   font-size: 72pt;
 }
 
 .timeControl {
   display: grid;
-  opacity: 0.75;
-  transition: opacity 0.5s;
+  transition: filter 0.5s;
   margin-inline: 20px;
   margin-block-end: 10px;
   width: 75px;
   user-select: none;
+  -webkit-user-select: none;
 
   & > div {
     display: flex;
@@ -112,7 +112,6 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     font-style: normal;
-    font-weight: 700;
     font-family: 'Anonymous Pro', monospace;
 
     & > * {
@@ -132,6 +131,8 @@ body {
   font-weight: 700;
   font-size: inherit;
   font-family: inherit;
+  user-select: none;
+  -webkit-user-select: none;
 
   &:hover {
     background-color: unset;
