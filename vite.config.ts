@@ -12,7 +12,6 @@ export default defineConfig({
         display: 'standalone',
         icons: [{
           src: "assets/icon-black.svg",
-          sizes: "all"
         }]
       },
       devOptions: {
